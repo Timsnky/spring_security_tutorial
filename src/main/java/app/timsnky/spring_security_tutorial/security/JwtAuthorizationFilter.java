@@ -3,7 +3,6 @@ package app.timsnky.spring_security_tutorial.security;
 import app.timsnky.spring_security_tutorial.db.UserRepository;
 import app.timsnky.spring_security_tutorial.model.User;
 import com.auth0.jwt.JWT;
-import com.auth0.jwt.algorithms.Algorithm;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
