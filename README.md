@@ -8,6 +8,7 @@ types of security authentication and authorization.
 <li>HTTP Basic Authentication</li>
 <li>Form Based Authentication</li>
 <li>JWT Authentication</li>
+</ul>
 
 <p>Applied technologies include:
 <ul>
