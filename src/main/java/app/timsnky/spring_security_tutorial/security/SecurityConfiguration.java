@@ -1,7 +1,8 @@
-package app.timsnky.spring_security_tutorial;
+package app.timsnky.spring_security_tutorial.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -13,25 +14,15 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @EnableWebSecurity
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
+    private UserPrincipalDetailsService userPrincipalDetailsService;
+
+    public SecurityConfiguration(UserPrincipalDetailsService userPrincipalDetailsService) {
+        this.userPrincipalDetailsService = userPrincipalDetailsService;
+    }
+
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth
-                .inMemoryAuthentication()
-                .withUser("admin")
-                .password(passwordEncoder().encode("password"))
-                .authorities("ACCESS_TEST1", "ACCESS_TEST2", "ROLE_ADMIN")
-
-                .and()
-
-                .withUser("user")
-                .password(passwordEncoder().encode("password"))
-                .roles("USER")
-
-                .and()
-
-                .withUser("manager")
-                .password(passwordEncoder().encode("password"))
-                .authorities("ACCESS_TEST1", "ROLE_MANAGER");
+        auth.authenticationProvider(authenticationProvider());
     }
 
     @Override
@@ -48,6 +39,15 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .and()
                 .httpBasic();
     }
+
+    @Bean
+    DaoAuthenticationProvider authenticationProvider() {
+        DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();
+        daoAuthenticationProvider.setPasswordEncoder(passwordEncoder());
+        daoAuthenticationProvider.setUserDetailsService(this.userPrincipalDetailsService);
+
+        return daoAuthenticationProvider;
+    };
 
     @Bean
     PasswordEncoder passwordEncoder() {

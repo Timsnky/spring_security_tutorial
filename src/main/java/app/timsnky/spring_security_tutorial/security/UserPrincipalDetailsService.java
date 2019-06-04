@@ -1,4 +1,4 @@
-package app.timsnky.spring_security_tutorial;
+package app.timsnky.spring_security_tutorial.security;
 
 import app.timsnky.spring_security_tutorial.db.UserRepository;
 import app.timsnky.spring_security_tutorial.model.User;
