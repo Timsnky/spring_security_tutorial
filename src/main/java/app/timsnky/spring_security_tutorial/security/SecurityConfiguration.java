@@ -39,11 +39,15 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/api/public/users").hasRole("ADMIN")
                 .and()
                 .formLogin()
+                .loginProcessingUrl("/login") //Optional
                 .loginPage("/login").permitAll()
+                .usernameParameter("username") //Optional
+                .passwordParameter("password") //Optional
                 .and()
                 .logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessUrl("/login")
                 .and()
-                .rememberMe();
+                .rememberMe()
+                .rememberMeParameter("remember-me"); //Optional
     }
 
     @Bean
